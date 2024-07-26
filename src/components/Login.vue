@@ -31,18 +31,19 @@
       async login() {
       try {
         const response = await axios.post('http://localhost:8000/login', {
-          username: this.username,
-          password: this.password
+        username: this.username,
+        password: this.password
         }, {
-          headers: {
-            'Content-Type': 'application/json'
-          }
+        headers: {
+          'Content-Type': 'application/json'
+        }
         });
-        localStorage.setItem('token', response.data.token);
+        sessionStorage.setItem('userId', response.data); // Store UserId for entire session
         this.$router.push('/dashboard');
       } catch (error) {
         this.error = 'Invalid username or password';
       }
+      }
     }
-  }};
+    };
   </script>

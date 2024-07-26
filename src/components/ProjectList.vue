@@ -8,6 +8,7 @@
           <th>Project Name</th>
           <th>Project Location</th>
           <th>Project Stage</th>
+          <th>Project Category</th>
           <th>Project Start Date</th>
           <th>Project Details</th>
           <th>Project Creator ID</th>
@@ -20,6 +21,7 @@
           <td>{{ project.ProjectName }}</td>
           <td>{{ project.ProjectLocation }}</td>
           <td>{{ project.ProjectStage }}</td>
+          <td>{{ project.ProjectCategory }}</td>
           <td>{{ project.ProjectStartDate }}</td>
           <td>{{ project.ProjectDetails }}</td>
           <td>{{ project.ProjectCreatorId }}</td>
@@ -56,16 +58,20 @@
     },
     methods: {
       editProject(id) {
-        this.$router.push(`/projects/${id}/edit`);
+        const project = this.projects.find(project => project.ProjectId === id);
+        this.$router.push({
+          path: `/dashboard/projects/${id}/edit`,
+          state: {projectData: project}
+        });
       },
       async deleteProject(id) {
         try {
-          await axios.delete(`http://localhost:8000/api/projects/${id}`, {
+          await axios.delete(`https://localhost:7187/api/Project/${id}`, {
             headers: {
               Authorization: `Bearer ${localStorage.getItem('token')}`
             }
           });
-          this.projects = this.projects.filter(project => project.id !== id);
+          this.projects = this.projects.filter(project => project.ProjectId !== id);
         } catch (error) {
           console.error('Error deleting project:', error);
         }
