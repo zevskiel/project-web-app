@@ -1,7 +1,7 @@
 <template>
   <div class="project-list">
     <h2>Projects</h2>
-    <table>
+    <table v-if="isLoggedIn">
       <thead>
         <tr>
           <th>Project ID</th>
@@ -41,7 +41,8 @@
   export default {
     data() {
       return {
-        projects: []
+        projects: [],
+        isLoggedIn: sessionStorage.getItem('userId') !== null && sessionStorage.getItem('userId') !== ''
       };
     },
     async created() {

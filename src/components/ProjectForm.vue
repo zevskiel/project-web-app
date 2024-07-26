@@ -1,5 +1,5 @@
 <template>
-  <div class="project-form">
+  <div v-if="isLoggedIn" class="project-form">
     <h2 v-if="isEditMode">Edit Project</h2>
     <h2 v-else>Create New Project</h2>
     <form @submit.prevent="saveProject">
@@ -63,7 +63,8 @@ export default {
         ProjectCreatorId: ''
       },
       error: '',
-      isEditMode: false
+      isEditMode: false,
+      isLoggedIn: sessionStorage.getItem('userId') !== null && sessionStorage.getItem('userId') !== ''
     };
   },
   async created() {
